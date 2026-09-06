@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special Proposal</title>
+  <style>
+    :root {
+      --bg-color: #0f0715;
+      --card-bg: #1d1128;
+      --pink-primary: #ff4081;
+      --pink-accent: #ff79b0;
+      --green-btn: #28a745;
+      --text-color: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(255, 64, 129, 0.2);
+      border: 1px solid rgba(255, 64, 129, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cat-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 3px solid var(--pink-primary);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    p.subtext {
+      color: #b3a5c7;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      min-height: 50px;
+      position: relative;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-yes {
+      background-color: var(--green-btn);
+      color: white;
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-no {
+      background-color: #6c757d;
+      color: white;
+      transition: all 0.2s ease;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+      border: 1px solid var(--pink-primary);
+    }
+
+    /* Image Carousel */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      margin: 15px 0;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .carousel-slide {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .carousel-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      background: #555;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .nav-dot.active {
+      background: var(--pink-primary);
+    }
+
+    /* Love Letter Step */
+    .letter-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: left;
+      margin: 15px 0;
+      max-height: 250px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Confetti/Hearts Canvas */
+    #confetti-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- STEP 1: Introduction -->
+    <div class="step active" id="step-1">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1bWc3MnAxaGpsNXRwbXZ5OG5scG0xbHBndWptMjRvdTdxZm9pYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9Ibxa0lDK0/giphy.gif" class="cat-img" alt="Cute Cat">
+      <h2>I have something special to tell you...</h2>
+      <p class="subtext">Something that will change everything ✨</p>
+      <button class="btn-yes" onclick="nextStep(2)">Tap to Begin 💕</button>
+    </div>
+
+    <!-- STEP 2: Trust Question -->
+    <div class="step" id="step-2">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaG9zbXgwZTN1MHdvdzZ2azk4NXdtMmc0aWRqNHNmeGl3ZWd6dXV1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/L95234213/giphy.gif" class="cat-img" alt="Crying Cat">
+      <h2>Be honest with me...</h2>
+      <p class="subtext">Do you trust me? 💕</p>
+      <div class="btn-group">
+        <button class="btn-yes" onclick="nextStep(3)">Yes, I do 💕</button>
+        <button class="btn-no" id="no-btn-1" onclick="shrinkNo('no-btn-1')">No 😞</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Love Question -->
+    <div class="step" id="step-3">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Q2YXVzbTRmdTNjYzJ1NmZsZXA4dTVycGN0ZHc5OWRsdzFseXNhZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/c40Y5xV1O4nS0/giphy.gif" class="cat-img" alt="Flower Cat">
+      <h2>One more thing...</h2>
+      <p class="subtext">Do you also love me? 💖</p>
+      <div class="btn-group">
+        <button class="btn-yes" onclick="nextStep(4)">Yes, I love you! 💖</button>
+        <button class="btn-no" id="no-btn-2" onclick="shrinkNo('no-btn-2')">No 😞</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Final Question -->
+    <div class="step" id="step-4">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExODFmdXZ3MG40czN3OHM4dXU3cndhbG1nODR5bndwMXplbjE4dHlhbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/KztT2c4u8mYYUiMKdJ/giphy.gif" class="cat-img" alt="Hearts Bear">
+      <h2>Last question, I promise!</h2>
+      <p class="subtext">Will you be mine forever? ☀️</p>
+      <div class="btn-group">
+        <button class="btn-yes" onclick="nextStep(5)">Yes, forever! 💖</button>
+        <button class="btn-no" onclick="showModal()">Let me think... 🤔</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Photo Gallery -->
+    <div class="step" id="step-5">
+      <h2>From the first day I met you...</h2>
+      <p class="subtext">Life became brighter ✨</p>
+      <div class="carousel-container">
+        <img id="carousel-img" class="carousel-slide" src="https://picsum.photos/400/300?random=1" alt="Memory">
+      </div>
+      <div class="carousel-btns">
+        <span class="nav-dot active" onclick="setSlide(0)"></span>
+        <span class="nav-dot" onclick="setSlide(1)"></span>
+        <span class="nav-dot" onclick="setSlide(2)"></span>
+      </div>
+      <button class="btn-yes" onclick="nextStep(6)">See My Message ➔</button>
+    </div>
+
+    <!-- STEP 6: Envelope & Love Letter -->
+    <div class="step" id="step-6">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjR6ZnF4ZnhwYmVwcXhhbHJidnlkMnI1aGZ2MzhjYzljczRraG1lNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26hpU8Pth2oF3iWre/giphy.gif" class="cat-img" alt="Envelope Cat">
+      <h2>My Dearest Love,</h2>
+      <div class="letter-card">
+        <p>From the moment I met you, my world changed forever. Your smile lights up my darkest days, and your laughter is the sweetest melody I've ever heard.<br><br>Every moment with you feels like a dream. You complete me in ways words could never express. Forever yours with all my heart and soul. ❤️</p>
+      </div>
+      <button class="btn-yes" onclick="nextStep(7)">Yes, I'm Yours Forever! 💕</button>
+    </div>
+
+    <!-- STEP 7: Celebration -->
+    <div class="step" id="step-7">
+      <h2>You made me the happiest! 🎉</h2>
+      <p class="subtext">Thank you for saying yes! ❤️<br>I promise to love you forever and always...</p>
+      <div style="font-size: 60px; margin: 20px 0;">💖</div>
+      <button class="btn-yes" onclick="location.reload()">Replay All 💕</button>
+    </div>
+  </div>
+
+  <!-- POP-UP MODAL (Forces "Yes") -->
+  <div class="modal-overlay" id="force-modal">
+    <div class="modal-card">
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Q2YXVzbTRmdTNjYzJ1NmZsZXA4dTVycGN0ZHc5OWRsdzFseXNhZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/c40Y5xV1O4nS0/giphy.gif" style="width:70px; border-radius:50%;" alt="Cat">
+      <h3 style="margin: 10px 0;">Just Say YES! 💕</h3>
+      <p style="font-size:0.85rem; color:#ccc; margin-bottom: 20px;">Come on, don't make me wait! You know deep down that you want to say yes. Let's make this moment magical together! ✨</p>
+      <button class="btn-yes" style="width:100%;" onclick="closeModalAndProceed()">💖 Yes, I'll Say YES! ✨</button>
+    </div>
+  </div>
+
+  <script>
+    // Step navigation
+    function nextStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById('step-' + stepNumber).classList.add('active');
+
+      if (stepNumber === 7) {
+        startConfetti();
+      }
+    }
+
+    // Shrink "No" button on click
+    function shrinkNo(id) {
+      const btn = document.getElementById(id);
+      let currentScale = parseFloat(btn.style.transform.replace('scale(', '').replace(')', '')) || 1;
+      currentScale -= 0.3;
+      if (currentScale <= 0.1) {
+        btn.style.display = 'none';
+      } else {
+        btn.style.transform = `scale(${currentScale})`;
+      }
+    }
+
+    // Modal logic
+    function showModal() {
+      document.getElementById('force-modal').style.display = 'flex';
+    }
+
+    function closeModalAndProceed() {
+      document.getElementById('force-modal').style.display = 'none';
+      nextStep(5);
+    }
+
+    // Carousel logic
+    const images = [
+      "https://picsum.photos/400/300?random=1",
+      "https://picsum.photos/400/300?random=2",
+      "https://picsum.photos/400/300?random=3"
+    ];
+    function setSlide(index) {
+      document.getElementById('carousel-img').src = images[index];
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    // Confetti / Heart Effect
+    function startConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+
+      const particles = [];
+      for (let i = 0; i < 40; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 15 + 10,
+          speed: Math.random() * 2 + 1,
+          opacity: Math.random()
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          ctx.fillStyle = `rgba(255, 64, 129, ${p.opacity})`;
+          ctx.font = `${p.size}px Arial`;
+          ctx.fillText('❤️', p.x, p.y);
+          p.y += p.speed;
+          if (p.y > canvas.height) p.y = 0;
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  </script>
+</body>
+  </html>
+  
